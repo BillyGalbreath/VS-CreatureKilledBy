@@ -1,0 +1,13 @@
+{
+  "type": "code",
+  "name": "CreatureKilledBy",
+  "modid": "creaturekilledby",
+  "version": "1.0.0",
+  "description": "Find out exactly what killed that creature",
+  "website": "https://github.com/BillyGalbreath/VS-CreatureKilledBy",
+  "authors": [ "BillyGalbreath" ],
+  "side": "Client",
+  "dependencies": {
+    "game": "1.18.8"
+  }
+}
