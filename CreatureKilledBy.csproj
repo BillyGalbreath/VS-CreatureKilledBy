@@ -2,11 +2,23 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
+        <EmbedAllSources>true</EmbedAllSources>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <DebugType>embedded</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
     </PropertyGroup>
 
     <ItemGroup>
+        <Reference Include="Vintagestory">
+            <HintPath>$(VINTAGE_STORY)/Vintagestory.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
         <Reference Include="VintagestoryAPI">
             <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
             <Private>false</Private>
@@ -15,7 +27,11 @@
             <HintPath>$(VINTAGE_STORY)/VintagestoryLib.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <Reference Include="VSCreativeMod">
+        <Reference Include="VintagestoryServer">
+            <HintPath>$(VINTAGE_STORY)/VintagestoryServer.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="VSCreative">
             <HintPath>$(VINTAGE_STORY)/Mods/VSCreativeMod.dll</HintPath>
             <Private>false</Private>
         </Reference>
@@ -31,22 +47,26 @@
             <HintPath>$(VINTAGE_STORY)/Lib/0Harmony.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <Reference Include="Microsoft.Data.Sqlite">
+            <HintPath>$(VINTAGE_STORY)/Lib/Microsoft.Data.Sqlite.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="protobuf-net">
+            <HintPath>$(VINTAGE_STORY)/Lib/protobuf-net.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <None Include="LICENSE" CopyToOutputDirectory="PreserveNewest"/>
-        <None Include="resources/**">
+    <ItemGroup>
+        <None Include="LICENSE" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="resources/**" CopyToOutputDirectory="PreserveNewest">
             <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
-    <Target Name="CreateModsDirectory" AfterTargets="PostBuildEvent">
-        <MakeDir Directories="bin/Mods"/>
-    </Target>
-
-    <Target Name="Package" AfterTargets="CreateModsDirectory" Condition="'$(Configuration)' == 'Release'">
-        <ZipDirectory DestinationFile="bin/Mods/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true"/>
+    <Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+        <MakeDir Directories="bin/Mods" />
+        <ZipDirectory DestinationFile="bin/Mods/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
     </Target>
 
 </Project>
